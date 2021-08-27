@@ -5,10 +5,13 @@ import 'dart:convert' as convert;
 
 import 'package:http/http.dart' as http;
 import 'package:scoaladesoft/screens/categoriesScreen.dart';
+import 'package:scoaladesoft/utils/database.dart';
 import 'package:scoaladesoft/utils/html.dart';
 import 'package:scoaladesoft/utils/network.dart';
 
 void main() {
+  DatabaseUtils();
+
   runApp(MyApp());
 }
 

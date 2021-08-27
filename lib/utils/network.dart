@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class NetworkUtils {
   static const String _url = 'scoaladesoft.ro';
-  static const String _prePath = 'wp-json/wc/v2';
+  static const String _prePath = 'wp-json/wc/v3';
 
   static const String _username = 'ck_697d95c170e2104a516199432ebbc8aab28a892c';
   static const String _password = 'cs_08e081b87d0219ee306f07a912934a1dd4f8f643';
@@ -28,6 +28,9 @@ class NetworkUtils {
       final uri = Uri.https(_url, _prePath + endpoint, queryParams);
 
       response = await http.get(uri, headers: headers);
+    } else {
+      final uri = Uri.https(_url, _prePath + endpoint, queryParams);
+      response = await http.post(uri, headers: headers);
     }
 
     if (response.statusCode == 200) {
