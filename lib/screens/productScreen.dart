@@ -10,6 +10,7 @@ import 'package:scoaladesoft/woocommerce/lineItems.dart';
 import 'package:scoaladesoft/woocommerce/orderModel.dart';
 import 'package:scoaladesoft/woocommerce/shipping.dart';
 import 'package:scoaladesoft/woocommerce/shippingLines.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductScreen extends StatelessWidget {
   String title;
@@ -25,6 +26,8 @@ class ProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    sharedTest();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(this.title),
@@ -65,7 +68,25 @@ class ProductScreen extends StatelessWidget {
     );
   }
 
-  void placeOrder() {
+  Future<void> placeOrder() async {
+    final shared = await SharedPreferences.getInstance();
+
+    Shipping shipping = Shipping(
+        firstName: shared.getString('firstName') ?? '',
+        lastName: shared.getString('lastName') ?? '',
+        country: shared.getString('country') ?? '',
+        city: shared.getString('city') ?? '',
+        address1: shared.getString('address1') ?? '');
+
+    Billing billing = Billing(
+        country: shared.getString('country') ?? '',
+        firstName: shared.getString('firstName') ?? '',
+        lastName: shared.getString('lastName') ?? '',
+        email: shared.getString('email') ?? '',
+        phone: shared.getString('phone') ?? '',
+        city: shared.getString('city') ?? '',
+        address1: shared.getString('address1') ?? '');
+
     List<ShippingLines> shippingLines = <ShippingLines>[
       ShippingLines(
         methodId: 'flat_rate',
@@ -77,22 +98,6 @@ class ProductScreen extends StatelessWidget {
     List<LineItems> lineItems = <LineItems>[
       LineItems(productId: 31, quantity: 1)
     ];
-
-    Shipping shipping = Shipping(
-        firstName: 'Alex',
-        lastName: 'Bordei',
-        country: "RO",
-        city: "Bucharest",
-        address1: "Strada Strazilor, nr 113");
-
-    Billing billing = Billing(
-        country: "RO",
-        firstName: "Alex",
-        lastName: "Bordei",
-        email: "alex.bordei1991@gmail.com",
-        phone: "0711223344",
-        city: "Bucharest",
-        address1: "Strada Strazilor, nr. 93");
 
     OrderModel orderRequest = OrderModel(
       lineItems: lineItems,
@@ -127,5 +132,13 @@ class ProductScreen extends StatelessWidget {
     } else {
       print(response.body);
     }
+  }
+
+  Future<void> sharedTest() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    int? counter = prefs.getInt('counter');
+
+    print('counter este' + counter.toString());
   }
 }

@@ -5,9 +5,11 @@ import 'dart:convert' as convert;
 
 import 'package:http/http.dart' as http;
 import 'package:scoaladesoft/screens/categoriesScreen.dart';
+import 'package:scoaladesoft/screens/userProfileScreen.dart';
 import 'package:scoaladesoft/utils/database.dart';
 import 'package:scoaladesoft/utils/html.dart';
 import 'package:scoaladesoft/utils/network.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   DatabaseUtils();

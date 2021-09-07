@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:scoaladesoft/screens/productByCategoryScreen.dart';
+import 'package:scoaladesoft/screens/userProfileScreen.dart';
 import 'package:scoaladesoft/utils/html.dart';
 import 'package:scoaladesoft/utils/network.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CategoriesScreen extends StatefulWidget {
   CategoriesScreen({Key? key}) : super(key: key);
@@ -29,6 +31,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // obtain shared preferences
     return Padding(
         padding: const EdgeInsets.all(15.0),
         child: loaded
@@ -36,9 +39,30 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 ? Column(
                     children: [
                       SizedBox(height: 70),
-                      Text(
-                        'Categorii',
-                        style: TextStyle(fontSize: 36),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Categorii',
+                            style: TextStyle(fontSize: 36),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UserProfileScreen()),
+                              );
+                            },
+                            child: Icon(
+                              Icons.person,
+                              size: 40,
+                            ),
+                          )
+                        ],
                       ),
                       Expanded(
                         child: ListView.builder(
